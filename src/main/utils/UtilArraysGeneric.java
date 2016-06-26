@@ -1,6 +1,7 @@
 package main.utils;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 /**
  * Class that provides methods for simple manipulation on arrays
@@ -8,9 +9,6 @@ import java.lang.reflect.Array;
  */
 public abstract class UtilArraysGeneric
 {
-    //------------------------------------------------------------------------------------------------------------------
-    //-------------------------------------------- Matrix Conversions --------------------------------------------------
-    //------------------------------------------------------------------------------------------------------------------
     /**
      * Extract one row from a 2D array
      * @param data a 2D array
@@ -50,7 +48,23 @@ public abstract class UtilArraysGeneric
         // Return result
         return col;
     }
-    //------------------------------------------------------------------------------------------------------------------
-    //------------------------------------------------------------------------------------------------------------------
-    //------------------------------------------------------------------------------------------------------------------
+
+    /**
+     * Convert Array List of arrays into a 2D array
+     * @param arrayList the array list to be converted
+     * @param dataClass the class of data objects
+     * @return
+     */
+    public static <E> E[][] getArray2D(final ArrayList<E[]> arrayList, final Class<E> dataClass) {
+        // Create new array
+        E[][] array2D = (E[][]) Array.newInstance(dataClass, arrayList.size(), arrayList.get(0).length);
+
+        // For each row
+        for (int rowIndex = 0; rowIndex < array2D.length; rowIndex++)
+            // Copy the row
+            array2D[rowIndex] = arrayList.get(rowIndex);
+
+        // Return result
+        return array2D;
+    }
 }
