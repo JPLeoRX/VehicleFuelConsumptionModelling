@@ -1,7 +1,9 @@
 package main;
 
-import main.data.Filter;
+import main.data.DataFilter;
+import main.data.VehicleEngineData;
 import main.utils.UtilExcel;
+import main.utils.UtilPrinter;
 
 public class Main {
 
@@ -11,7 +13,19 @@ public class Main {
         String[][] table = UtilExcel.readTable(FilesWithData.DATA_TABLE_MODIFIED_FILEPATH, FilesWithData.DATA_TABLE_MODIFIED_NUMBER_OF_ROWS, FilesWithData.DATA_TABLE_MODIFIED_NUMBER_OF_COLS, FilesWithData.DATA_TABLE_MODIFIED_SHEET_INDEX);
         System.out.println("Table read");
 
-        String[][] gasolineOnly = Filter.selectGasolineOnly(table);
-        String[][] dieselOnly = Filter.selectDieselOnly(table);
+        String[][] gasolineOnly = DataFilter.selectGasolineOnly(table);
+        String[][] dieselOnly = DataFilter.selectDieselOnly(table);
+
+        //UtilPrinter.print(dieselOnly);
+        //System.out.print(dieselOnly.length);
+
+        for (String[] row : gasolineOnly)
+        {
+            VehicleEngineData vehicleEngineData = new VehicleEngineData(row);
+            System.out.println(vehicleEngineData);
+        }
+
+        System.out.println("Number of diesel cars: " + dieselOnly.length);
+        System.out.println("Number of benzin cars: " + gasolineOnly.length);
     }
 }
