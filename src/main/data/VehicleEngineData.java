@@ -31,6 +31,7 @@ public class VehicleEngineData
 
         drivetrain = DataParser.parseDriveType(vehicleDataRow[EnumTableModifiedColumnID.drive]);
         transmissionType = DataParser.parseTransmissionType(vehicleDataRow[EnumTableModifiedColumnID.trany]);
+        transmissionNumberOfSpeeds = DataParser.parseTransmissionNumberOfSpeeds(vehicleDataRow[EnumTableModifiedColumnID.trany]);
     }
 
     @Override

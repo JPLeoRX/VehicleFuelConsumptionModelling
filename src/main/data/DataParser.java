@@ -3,12 +3,20 @@ package main.data;
 import main.enums.EnumDataDrivetrainType;
 import main.enums.EnumDataFuelType;
 import main.enums.EnumDataTransmissionType;
+import main.enums.EnumDataVehicleClass;
 
 /**
  * Created by Leo on 26-Jun-16.
  */
 public class DataParser
 {
+    public static double parseGuzzler(String guzzler) {
+        if (guzzler == null || guzzler.equals(""))
+            return 0;
+        else
+            return 1;
+    }
+
     public static double parseTurboCharger(String tCharger) {
         if (tCharger == null || tCharger.equals(""))
             return 0;
@@ -82,5 +90,87 @@ public class DataParser
         else
             throw new IllegalArgumentException("Illegal tranny value: " + tranny);
 
+    }
+
+    public static double parseTransmissionNumberOfSpeeds(String tranny) {
+        if (tranny.contains("AV-S") || tranny.contains("AV") || tranny.contains("variable"))
+            return 0;
+        for (char c : tranny.toCharArray())
+            if (Character.isDigit(c))
+                return Integer.valueOf(String.valueOf(c));
+        throw new IllegalArgumentException("Illegal tranny value: " + tranny);
+    }
+
+    public static double parseVehicleClass(String vclass) {
+        if (vclass.equals("Small Pickup Trucks"))
+            return EnumDataVehicleClass.SMALL_PICKUP_TRUCK;
+        else if (vclass.equals("Small Pickup Trucks 2WD"))
+            return EnumDataVehicleClass.SMALL_PICKUP_TRUCK;
+        else if (vclass.equals("Small Pickup Trucks 4WD"))
+            return EnumDataVehicleClass.SMALL_PICKUP_TRUCK;
+        else if (vclass.equals("Standard Pickup Trucks"))
+            return EnumDataVehicleClass.STANDARD_PICKUP_TRUCK;
+        else if (vclass.equals("Standard Pickup Trucks 2WD"))
+            return EnumDataVehicleClass.STANDARD_PICKUP_TRUCK;
+        else if (vclass.equals("Standard Pickup Trucks 4WD"))
+            return EnumDataVehicleClass.STANDARD_PICKUP_TRUCK;
+        else if (vclass.equals("Standard Pickup Trucks/2wd"))
+            return EnumDataVehicleClass.STANDARD_PICKUP_TRUCK;
+        else if (vclass.equals("Special Purpose Vehicle"))
+            return EnumDataVehicleClass.SPECIAL_PURPOSE_VEHICLE;
+        else if (vclass.equals("Special Purpose Vehicles"))
+            return EnumDataVehicleClass.SPECIAL_PURPOSE_VEHICLE;
+        else if (vclass.equals("Special Purpose Vehicle 2WD"))
+            return EnumDataVehicleClass.SPECIAL_PURPOSE_VEHICLE;
+        else if (vclass.equals("Special Purpose Vehicle 4WD"))
+            return EnumDataVehicleClass.SPECIAL_PURPOSE_VEHICLE;
+        else if (vclass.equals("Special Purpose Vehicles/2wd"))
+            return EnumDataVehicleClass.SPECIAL_PURPOSE_VEHICLE;
+        else if (vclass.equals("Special Purpose Vehicles/4wd"))
+            return EnumDataVehicleClass.SPECIAL_PURPOSE_VEHICLE;
+        else if (vclass.equals("Sport Utility Vehicle - 2WD"))
+            return EnumDataVehicleClass.SPORT_UTILITY_VEHICLE;
+        else if (vclass.equals("Sport Utility Vehicle - 4WD"))
+            return EnumDataVehicleClass.SPORT_UTILITY_VEHICLE;
+        else if (vclass.equals("Small Sport Utility Vehicle 2WD"))
+            return EnumDataVehicleClass.SMALL_SPORT_UTILITY_VEHICLE;
+        else if (vclass.equals("Small Sport Utility Vehicle 4WD"))
+            return EnumDataVehicleClass.SMALL_SPORT_UTILITY_VEHICLE;
+        else if (vclass.equals("Standard Sport Utility Vehicle 2WD"))
+            return EnumDataVehicleClass.STANDARD_SPORT_UTILITY_VEHICLE;
+        else if (vclass.equals("Standard Sport Utility Vehicle 4WD"))
+            return EnumDataVehicleClass.STANDARD_SPORT_UTILITY_VEHICLE;
+        else if (vclass.equals("Small Station Wagons"))
+            return EnumDataVehicleClass.SMALL_STATION_WAGON;
+        else if (vclass.equals("Midsize Station Wagons"))
+            return EnumDataVehicleClass.MIDSIZE_STATION_WAGON;
+        else if (vclass.equals("Midsize-Large Station Wagons"))
+            return EnumDataVehicleClass.MIDSIZE_LARGE_STATION_WAGON;
+        else if (vclass.equals("Minicompact Cars"))
+            return EnumDataVehicleClass.MINICOMPACT_CAR;
+        else if (vclass.equals("Compact Cars"))
+            return EnumDataVehicleClass.COMPACT_CAR;
+        else if (vclass.equals("Subcompact Cars"))
+            return EnumDataVehicleClass.SUBCOMPACT_CAR;
+        else if (vclass.equals("Two Seaters"))
+            return EnumDataVehicleClass.TWO_SEATER;
+        else if (vclass.equals("Midsize Cars"))
+            return EnumDataVehicleClass.MIDSIZE_CAR;
+        else if (vclass.equals("Large Cars"))
+            return EnumDataVehicleClass.LARGE_CAR;
+        else if (vclass.equals("Vans"))
+            return EnumDataVehicleClass.VAN;
+        else if (vclass.equals("Vans, Cargo Type"))
+            return EnumDataVehicleClass.VAN;
+        else if (vclass.equals("Vans, Passenger Type"))
+            return EnumDataVehicleClass.VAN;
+        else if (vclass.equals("Vans Passenger"))
+            return EnumDataVehicleClass.VAN;
+        else if (vclass.equals("Minivan - 2WD"))
+            return EnumDataVehicleClass.MINIVAN;
+        else if (vclass.equals("Minivan - 4WD"))
+            return EnumDataVehicleClass.MINIVAN;
+        else
+            throw new IllegalArgumentException("Illegal vclass value: " + vclass);
     }
 }
