@@ -19,7 +19,7 @@ public class DataFilter
         // For each vehicle in the table
         for (int vehicleDataRowIndex = 0; vehicleDataRowIndex < table.length; vehicleDataRowIndex++)
             // If it is gasoline
-            if (isGasoline(table[vehicleDataRowIndex]))
+            if (isGasoline(table[vehicleDataRowIndex]) && isValid(table[vehicleDataRowIndex]))
                 // Add it to the array list
                 selectedVehicleDataRows.add(table[vehicleDataRowIndex]);
 
@@ -39,7 +39,7 @@ public class DataFilter
         // For each vehicle in data set
         for (int vehicleDataRowIndex = 0; vehicleDataRowIndex < table.length; vehicleDataRowIndex++)
             // If it is diesel
-            if (isDiesel(table[vehicleDataRowIndex]))
+            if (isDiesel(table[vehicleDataRowIndex]) && isValid(table[vehicleDataRowIndex]))
                 // Add it to the array list
                 selectedVehicleDataRows.add(table[vehicleDataRowIndex]);
 
@@ -48,45 +48,68 @@ public class DataFilter
     }
 
     //------------------------------------------------------------------------------------------------------------------
-    //------------------------------------------------- Helpers --------------------------------------------------------
+    //--------------------------------------- Helpers (Row Wrappers ) --------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------
     private static boolean isGasoline(String[] row) {
         // Redirect call
-        return isGasoline(row[EnumTableModifiedColumnID.fuelType1], row[EnumTableModifiedColumnID.fuelType2], row[EnumTableModifiedColumnID.atvtype], row[EnumTableModifiedColumnID.cylinders]);
+        return isGasoline(row[EnumTableModifiedColumnID.fuelType1], row[EnumTableModifiedColumnID.fuelType2], row[EnumTableModifiedColumnID.atvtype]);
     }
 
     private static boolean isDiesel(String[] row) {
         // Redirect call
-        return isDiesel(row[EnumTableModifiedColumnID.fuelType1], row[EnumTableModifiedColumnID.fuelType2], row[EnumTableModifiedColumnID.atvtype], row[EnumTableModifiedColumnID.cylinders]);
+        return isDiesel(row[EnumTableModifiedColumnID.fuelType1], row[EnumTableModifiedColumnID.fuelType2], row[EnumTableModifiedColumnID.atvtype]);
     }
 
-    private static boolean isGasoline(final String fueltype1, final String fueltype2, final String atvType, final String cylinders) {
+    private static boolean isValid(String[] row) {
+        // Redirect call
+        return isValid(row[EnumTableModifiedColumnID.cylinders], row[EnumTableModifiedColumnID.drive], row[EnumTableModifiedColumnID.trany]);
+    }
+    //------------------------------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------------------------------
+
+
+
+    //------------------------------------------------------------------------------------------------------------------
+    //--------------------------------------------- Helpers ------------------------------------------------------------
+    //------------------------------------------------------------------------------------------------------------------
+    private static boolean isGasoline(final String fueltype1, final String fueltype2, final String atvType) {
         // If the first fuel type is correct
         if (fueltype1.equals("Regular Gasoline") || fueltype1.equals("Midgrade Gasoline") || fueltype1.equals("Premium Gasoline"))
             // And if no secondary fuel is used
             if (fueltype2 == null || fueltype2.equals(""))
                 // And if no alternative fuel is used
                 if (atvType == null || atvType.equals(""))
-                    // And if valid cylinders data is presented
-                    if (cylinders != null && !cylinders.equals("") && !cylinders.equals("NA"))
-                        // If all conditions are satisfied - return true
-                        return true;
+                    // If all conditions are satisfied - return true
+                    return true;
 
         // If some of the conditions fail - return false
         return false;
     }
 
-    private static boolean isDiesel(final String fueltype1, final String fueltype2, final String atvType, final String cylinders) {
+    private static boolean isDiesel(final String fueltype1, final String fueltype2, final String atvType) {
         // If the first fuel type is correct
         if (fueltype1.equals("Diesel"))
             // And if no secondary fuel is used
             if (fueltype2 == null || fueltype2.equals(""))
                 // And if alternative fuel is diesel
                 if (atvType != null && atvType.equals("Diesel"))
-                    // And if valid cylinders data is presented
-                    if (cylinders != null && !cylinders.equals("") && !cylinders.equals("NA"))
-                        // If all conditions are satisfied - return true
-                        return true;
+                    // If all conditions are satisfied - return true
+                    return true;
+
+        // If some of the conditions fail - return false
+        return false;
+    }
+
+    private static boolean isValid(final String cylinders, final String drive, final String tranny) {
+        // If valid cylinders data is presented
+        if (cylinders != null && !cylinders.equals("") && !cylinders.equals("NA"))
+            // If valid drivetrain data is presented
+            if (drive != null && !drive.equals("") && !drive.equals("2-Wheel Drive"))
+                // If valid transmission data is presented
+                if (tranny != null && !tranny.equals(""))
+                    // If all conditions are satisfied - return true
+                    return true;
 
         // If some of the conditions fail - return false
         return false;
