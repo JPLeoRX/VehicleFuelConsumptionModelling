@@ -5,10 +5,18 @@ import main.utils.UtilArraysGeneric;
 
 import java.util.ArrayList;
 
-public class DataFilter
+/**
+ * Class that performs filtering of damaged/incomplete data and allows selection of vehicles by fuel type (gasoline or diesel)
+ * @author Lev Ertuna - leo.ertuna@gmail.com
+ */
+public abstract class DataFilter
 {
+    //------------------------------------------------------------------------------------------------------------------
+    //--------------------------------------------- Core Methods -------------------------------------------------------
+    //------------------------------------------------------------------------------------------------------------------
     /**
      * Select only cars that run on gasoline, with no additional fuel used
+     * Filter out invalid data
      * @param table the full table, read from Excel file
      * @return 2D array with only selected rows
      */
@@ -18,7 +26,7 @@ public class DataFilter
 
         // For each vehicle in the table
         for (int vehicleDataRowIndex = 0; vehicleDataRowIndex < table.length; vehicleDataRowIndex++)
-            // If it is gasoline
+            // If it is gasoline and valid
             if (isGasoline(table[vehicleDataRowIndex]) && isValid(table[vehicleDataRowIndex]))
                 // Add it to the array list
                 selectedVehicleDataRows.add(table[vehicleDataRowIndex]);
@@ -29,6 +37,7 @@ public class DataFilter
 
     /**
      * Select only cars that run on diesel, with no additional fuel used
+     * Filter out invalid data
      * @param table the full table, read from Excel file
      * @return 2D array with only selected rows
      */
@@ -38,7 +47,7 @@ public class DataFilter
 
         // For each vehicle in data set
         for (int vehicleDataRowIndex = 0; vehicleDataRowIndex < table.length; vehicleDataRowIndex++)
-            // If it is diesel
+            // If it is diesel and valid
             if (isDiesel(table[vehicleDataRowIndex]) && isValid(table[vehicleDataRowIndex]))
                 // Add it to the array list
                 selectedVehicleDataRows.add(table[vehicleDataRowIndex]);
@@ -46,20 +55,40 @@ public class DataFilter
         // Return the results, converted into 2D array
         return UtilArraysGeneric.getArray2D(selectedVehicleDataRows, String.class);
     }
+    //------------------------------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------------------------------
+
+
 
     //------------------------------------------------------------------------------------------------------------------
-    //--------------------------------------- Helpers (Row Wrappers ) --------------------------------------------------
+    //--------------------------------------- Filters (Row Wrappers) ---------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------
+    /**
+     * Is this a pure gasoline car?
+     * @param row row with vehicle data, obtained from the table
+     * @return
+     */
     private static boolean isGasoline(String[] row) {
         // Redirect call
         return isGasoline(row[EnumTableModifiedColumnID.fuelType1], row[EnumTableModifiedColumnID.fuelType2], row[EnumTableModifiedColumnID.atvtype]);
     }
 
+    /**
+     * Is this a pure diesel car?
+     * @param row row with vehicle data, obtained from the table
+     * @return
+     */
     private static boolean isDiesel(String[] row) {
         // Redirect call
         return isDiesel(row[EnumTableModifiedColumnID.fuelType1], row[EnumTableModifiedColumnID.fuelType2], row[EnumTableModifiedColumnID.atvtype]);
     }
 
+    /**
+     * Is this a valid car data?
+     * @param row row with vehicle data, obtained from the table
+     * @return
+     */
     private static boolean isValid(String[] row) {
         // Redirect call
         return isValid(row[EnumTableModifiedColumnID.cylinders], row[EnumTableModifiedColumnID.drive], row[EnumTableModifiedColumnID.trany]);
@@ -71,7 +100,7 @@ public class DataFilter
 
 
     //------------------------------------------------------------------------------------------------------------------
-    //--------------------------------------------- Helpers ------------------------------------------------------------
+    //--------------------------------------------- Filters ------------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------
     private static boolean isGasoline(final String fueltype1, final String fueltype2, final String atvType) {
         // If the first fuel type is correct

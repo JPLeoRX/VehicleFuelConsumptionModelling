@@ -6,7 +6,8 @@ import main.enums.EnumDataTransmissionType;
 import main.enums.EnumDataVehicleClass;
 
 /**
- * Created by Leo on 26-Jun-16.
+ * Class that performs parsing of data from strings to numeric values
+ * @author Lev Ertuna - leo.ertuna@gmail.com
  */
 public class DataParser
 {
@@ -89,7 +90,6 @@ public class DataParser
             return EnumDataTransmissionType.AUTOMATIC;
         else
             throw new IllegalArgumentException("Illegal tranny value: " + tranny);
-
     }
 
     public static double parseTransmissionNumberOfSpeeds(String tranny) {

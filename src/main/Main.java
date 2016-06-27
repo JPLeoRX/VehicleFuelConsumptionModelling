@@ -1,11 +1,10 @@
 package main;
 
 import main.data.DataFilter;
-import main.data.VehicleBodyData;
-import main.data.VehicleEngineData;
-import main.data.VehicleFuelConsumptionData;
+import main.data.VehicleDataBody;
+import main.data.VehicleDataEngine;
+import main.data.VehicleDataFuelConsumption;
 import main.utils.UtilExcel;
-import main.utils.UtilPrinter;
 
 public class Main {
 
@@ -23,13 +22,13 @@ public class Main {
 
         for (String[] row : gasolineOnly)
         {
-            VehicleEngineData vehicleEngineData = new VehicleEngineData(row);
-            VehicleBodyData vehicleBodyData = new VehicleBodyData(row);
-            VehicleFuelConsumptionData vehicleFuelConsumptionData = new VehicleFuelConsumptionData(row);
+            VehicleDataEngine vehicleEngineData = new VehicleDataEngine(row);
+            VehicleDataBody vehicleBodyData = new VehicleDataBody(row);
+            VehicleDataFuelConsumption vehicleDataFuelConsumption = new VehicleDataFuelConsumption(row);
 
             //System.out.println(vehicleEngineData);
             //System.out.println(vehicleBodyData);
-            System.out.println(vehicleFuelConsumptionData);
+            System.out.println(vehicleDataFuelConsumption);
         }
 
         System.out.println("Number of diesel cars: " + dieselOnly.length);
