@@ -1,5 +1,6 @@
-package main.utils;
+package main.utils.machine_learning;
 
+import main.utils.common.UtilArraysDouble;
 import org.encog.ml.data.MLDataSet;
 import org.encog.ml.data.basic.BasicMLData;
 import org.encog.ml.data.basic.BasicMLDataPair;

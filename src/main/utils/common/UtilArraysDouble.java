@@ -1,4 +1,4 @@
-package main.utils;
+package main.utils.common;
 
 /**
  * Class that provides methods for simple manipulation on arrays with doubles

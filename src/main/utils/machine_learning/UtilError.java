@@ -1,4 +1,4 @@
-package main.utils;
+package main.utils.machine_learning;
 
 /**
  * Class that provides methods for simple error calculations

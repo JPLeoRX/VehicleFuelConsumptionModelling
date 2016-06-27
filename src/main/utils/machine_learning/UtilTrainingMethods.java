@@ -1,4 +1,4 @@
-package main.utils;
+package main.utils.machine_learning;
 
 import org.encog.ml.data.MLDataSet;
 import org.encog.ml.train.MLTrain;

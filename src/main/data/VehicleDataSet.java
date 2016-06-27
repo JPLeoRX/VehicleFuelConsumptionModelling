@@ -1,9 +1,9 @@
 package main.data;
 
 import main.constants.NormalizationLimits;
-import main.utils.UtilArraysGeneric;
-import main.utils.UtilDataSets;
-import main.utils.UtilNormalizer;
+import main.utils.common.UtilArraysGeneric;
+import main.utils.machine_learning.UtilDataSets;
+import main.utils.machine_learning.UtilNormalizer;
 import org.encog.ml.data.MLDataSet;
 import org.encog.ml.data.basic.BasicMLData;
 import org.encog.ml.data.basic.BasicMLDataPair;

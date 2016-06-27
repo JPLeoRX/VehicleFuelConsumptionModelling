@@ -1,7 +1,7 @@
 package main.data;
 
 import main.enums.EnumTableModifiedColumnID;
-import main.utils.UtilArraysGeneric;
+import main.utils.common.UtilArraysGeneric;
 
 import java.util.ArrayList;
 

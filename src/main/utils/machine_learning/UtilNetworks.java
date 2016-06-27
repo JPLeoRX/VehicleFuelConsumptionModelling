@@ -1,4 +1,4 @@
-package main.utils;
+package main.utils.machine_learning;
 
 import org.encog.engine.network.activation.ActivationSigmoid;
 import org.encog.neural.networks.BasicNetwork;

@@ -2,8 +2,7 @@ package main;
 
 import main.constants.FilesWithData;
 import main.data.*;
-import main.utils.UtilExcel;
-import org.encog.ml.data.MLDataPair;
+import main.utils.common.UtilExcel;
 
 public class Main {
 

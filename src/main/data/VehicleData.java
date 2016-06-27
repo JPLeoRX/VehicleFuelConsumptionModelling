@@ -1,6 +1,6 @@
 package main.data;
 
-import main.utils.UtilArraysDouble;
+import main.utils.common.UtilArraysDouble;
 
 import java.io.Serializable;
 

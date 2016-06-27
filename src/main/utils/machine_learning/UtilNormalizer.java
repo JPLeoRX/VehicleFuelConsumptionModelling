@@ -1,5 +1,6 @@
-package main.utils;
+package main.utils.machine_learning;
 
+import main.utils.common.UtilArraysDouble;
 import org.encog.util.arrayutil.NormalizeArray;
 import org.encog.util.arrayutil.NormalizedField;
 
