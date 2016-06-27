@@ -13,9 +13,9 @@ public abstract class DataParser
 {
     public static double parseGuzzler(String guzzler) {
         if (guzzler == null || guzzler.equals(""))
-            return 0;
-        else
             return 1;
+        else
+            return 10;
     }
 
     public static double parseTurboCharger(String tCharger) {
