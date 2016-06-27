@@ -9,7 +9,7 @@ import main.enums.EnumDataVehicleClass;
  * Class that performs parsing of data from strings to numeric values
  * @author Lev Ertuna - leo.ertuna@gmail.com
  */
-public class DataParser
+public abstract class DataParser
 {
     public static double parseGuzzler(String guzzler) {
         if (guzzler == null || guzzler.equals(""))

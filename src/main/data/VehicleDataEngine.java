@@ -20,7 +20,7 @@ public class VehicleDataEngine implements Serializable
      * Basic constructor
      * @param vehicleDataRow row of vehicle data obtained from reading the table
      */
-    public VehicleDataEngine(String[] vehicleDataRow) {
+    public VehicleDataEngine(final String[] vehicleDataRow) {
         cylinders = Double.valueOf(vehicleDataRow[EnumTableModifiedColumnID.cylinders]);
         displacement = Double.valueOf(vehicleDataRow[EnumTableModifiedColumnID.displ]);
 

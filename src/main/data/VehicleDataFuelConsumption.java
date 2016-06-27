@@ -19,7 +19,7 @@ public class VehicleDataFuelConsumption implements Serializable
      * Basic constructor
      * @param vehicleDataRow row of vehicle data obtained from reading the table
      */
-    public VehicleDataFuelConsumption(String[] vehicleDataRow) {
+    public VehicleDataFuelConsumption(final String[] vehicleDataRow) {
         cityMPG = Double.valueOf(vehicleDataRow[EnumTableModifiedColumnID.city08]);
         combinedMPG = Double.valueOf(vehicleDataRow[EnumTableModifiedColumnID.comb08]);
         highwayMPG = Double.valueOf(vehicleDataRow[EnumTableModifiedColumnID.highway08]);

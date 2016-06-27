@@ -21,7 +21,7 @@ public class VehicleDataBody implements Serializable
      * Basic constructor
      * @param vehicleDataRow row of vehicle data obtained from reading the table
      */
-    public VehicleDataBody(String[] vehicleDataRow) {
+    public VehicleDataBody(final String[] vehicleDataRow) {
         hatchbackLuggageVolume = Double.valueOf(vehicleDataRow[EnumTableModifiedColumnID.hlv]);
         hatchbackPassengerVolume = Double.valueOf(vehicleDataRow[EnumTableModifiedColumnID.hpv]);
 

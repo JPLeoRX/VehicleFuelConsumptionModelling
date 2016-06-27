@@ -4,7 +4,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
- * Class that provides methods for simple manipulation on arrays
+ * Class that provides methods for simple manipulation on arrays with generic objects
  * @author Lev Ertuna - leo.ertuna@gmail.com
  */
 public abstract class UtilArraysGeneric
