@@ -16,7 +16,11 @@ public class Main {
         String[][] dieselOnly = DataFilter.selectDieselOnly(table);
         System.out.println("Table filtered");
 
-        VehicleDataSet vehicleDataSet = new VehicleDataSet(dieselOnly);
+        VehicleDataSet vehicleDataSet = new VehicleDataSet(gasolineOnly);
+        System.out.println("Dataset created");
+
+        Network network = new Network(vehicleDataSet.getInputColumnsNormalizedFields().length, new int[]{100}, vehicleDataSet.getOutputColumnsNormalizedFields().length, vehicleDataSet, 0.9, 0.5);
+        network.test(vehicleDataSet.getTestingSet(), true);
 
         System.out.println("Execution finished");
     }

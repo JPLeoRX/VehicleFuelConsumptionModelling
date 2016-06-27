@@ -3,7 +3,9 @@ package main;
 import main.data.VehicleDataSet;
 import main.helpers.ErrorTuple;
 import main.utils.UtilPrinter;
+import main.utils.machine_learning.UtilNetworks;
 import main.utils.machine_learning.UtilNormalizer;
+import main.utils.machine_learning.UtilTrainingMethods;
 import org.encog.ml.data.MLDataPair;
 import org.encog.ml.data.MLDataSet;
 import org.encog.ml.train.MLTrain;
@@ -11,9 +13,35 @@ import org.encog.neural.networks.BasicNetwork;
 
 public class Network
 {
+    private int numberOfInputs;
+    private int[] hiddenStructure;
+    private int numberOfOutputs;
+    private double learningRate;
+    private double learningMomentum;
+
     private VehicleDataSet vehicleDataSet;
+    private MLDataSet trainingSet;
+    private MLDataSet testingSet;
+
     private BasicNetwork network;
     private MLTrain trainingMethod;
+
+    public Network(int numberOfInputs, int[] hiddenStructure, int numberOfOutputs, VehicleDataSet vehicleDataSet, double learningRate, double learningMomentum) {
+        this.numberOfInputs = numberOfInputs;
+        this.hiddenStructure = hiddenStructure;
+        this.numberOfOutputs = numberOfOutputs;
+
+        this.vehicleDataSet = vehicleDataSet;
+        this.trainingSet = vehicleDataSet.getTrainingSet();
+        this.testingSet = vehicleDataSet.getTestingSet();
+
+        this.learningRate = learningRate;
+        this.learningMomentum = learningMomentum;
+
+        this.network = UtilNetworks.createMLP(numberOfInputs, hiddenStructure, numberOfOutputs);
+        this.trainingMethod = UtilTrainingMethods.createResilientPropagation(network, trainingSet, learningRate, learningMomentum);
+    }
+
 
     /**
      * Train the network
@@ -42,8 +70,10 @@ public class Network
 
     /**
      * Test the network
+     * @param testingSet
+     * @param print
      */
-    public double test(MLDataSet testingSet, boolean print) {
+    public void test(MLDataSet testingSet, boolean print) {
         // Initialize testing counter
         int testCount = 0;
 
@@ -53,8 +83,7 @@ public class Network
         double totalRootMeanSquaredError = 0;
 
         // For each data pair in testing set
-        for (MLDataPair dataPair : testingSet)
-        {
+        for (MLDataPair dataPair : testingSet) {
             // Get input, expected output, actual output
             double[] input = dataPair.getInputArray();
             double[] outputExpected = dataPair.getIdealArray();
@@ -68,7 +97,7 @@ public class Network
             // Compute the error
             ErrorTuple errorTuple = new ErrorTuple(denormalizedOutputExpected, denormalizedOutputActual);
 
-            // Incrememnt total error
+            // Increment total error
             totalPercentageError += errorTuple.getErrorPercentage();
             totalMeanSquaredError += errorTuple.getErrorMeanSquared();
             totalRootMeanSquaredError += errorTuple.getErrorRootMeanSquared();
@@ -88,16 +117,16 @@ public class Network
             testCount++;
         }
 
+        // Average the total error
         totalPercentageError = totalPercentageError / testCount;
         totalMeanSquaredError = totalMeanSquaredError / testCount;
         totalRootMeanSquaredError = totalRootMeanSquaredError / testCount;
 
+        // Print results
         if (print) {
             System.out.println("Total Percentage Error:           " + UtilPrinter.getStr(totalPercentageError * 100) + "%");
             System.out.println("Total Mean Squared Error:         " + UtilPrinter.getStr(totalMeanSquaredError));
             System.out.println("Total Root Mean Squared Error:    " + UtilPrinter.getStr(totalRootMeanSquaredError));
         }
-
-        return totalRootMeanSquaredError;
     }
 }
