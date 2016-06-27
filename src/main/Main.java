@@ -1,7 +1,9 @@
 package main;
 
+import main.constants.FilesWithData;
 import main.data.*;
 import main.utils.UtilExcel;
+import org.encog.ml.data.MLDataPair;
 
 public class Main {
 
@@ -13,16 +15,10 @@ public class Main {
 
         String[][] gasolineOnly = DataFilter.selectGasolineOnly(table);
         String[][] dieselOnly = DataFilter.selectDieselOnly(table);
+        System.out.println("Table filtered");
 
-        //UtilPrinter.print(dieselOnly);
-        //System.out.print(dieselOnly.length);
+        VehicleDataSet vehicleDataSet = new VehicleDataSet(dieselOnly);
 
-        for (String[] row : gasolineOnly) {
-            VehicleData vehicleData = new VehicleData(row);
-            System.out.println(vehicleData);
-        }
-
-        System.out.println("Number of diesel cars: " + dieselOnly.length);
-        System.out.println("Number of benzin cars: " + gasolineOnly.length);
+        System.out.println("Execution finished");
     }
 }

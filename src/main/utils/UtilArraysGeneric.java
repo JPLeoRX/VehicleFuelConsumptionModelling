@@ -2,6 +2,7 @@ package main.utils;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Class that provides methods for simple manipulation on arrays with generic objects
@@ -66,5 +67,24 @@ public abstract class UtilArraysGeneric
 
         // Return result
         return array2D;
+    }
+
+    /**
+     * Shuffle array
+     * @param originalArray original array to be shuffled
+     * @param randomizationSeed seed used to generate random indexes
+     * @return shuffled array
+     */
+    public static <E> E[] shuffle(final E[] originalArray, final int randomizationSeed) {
+        Random random = new Random(randomizationSeed);
+
+        for (int index = originalArray.length - 1; index > 0; index--) {
+            int randomIndex = random.nextInt(index + 1);
+            E temp = originalArray[randomIndex];
+            originalArray[randomIndex] = originalArray[index];
+            originalArray[index] = temp;
+        }
+
+        return originalArray;
     }
 }
