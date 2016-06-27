@@ -1,13 +1,17 @@
 package main;
 
+import main.data.VehicleDataSet;
+import main.helpers.ErrorTuple;
+import main.utils.UtilPrinter;
+import main.utils.machine_learning.UtilNormalizer;
+import org.encog.ml.data.MLDataPair;
+import org.encog.ml.data.MLDataSet;
 import org.encog.ml.train.MLTrain;
 import org.encog.neural.networks.BasicNetwork;
 
-/**
- * Created by Leo on 28-Jun-16.
- */
 public class Network
 {
+    private VehicleDataSet vehicleDataSet;
     private BasicNetwork network;
     private MLTrain trainingMethod;
 
@@ -15,7 +19,7 @@ public class Network
      * Train the network
      * @param maxEpochs limit in maximum epochs
      */
-    public void train(int maxEpochs) {
+    public void train(int maxEpochs, boolean print) {
         // Initialize epoch
         int epoch = 0;
 
@@ -28,10 +32,72 @@ public class Network
             epoch++;
 
             // Print results
-            System.out.println("Epoch #" + epoch + "\tTraining Error:   " + trainingMethod.getError());
+            if (print)
+                System.out.println("Epoch #" + epoch + "\tTraining Error:   " + trainingMethod.getError());
         }
 
         // Finalize training
         trainingMethod.finishTraining();
+    }
+
+    /**
+     * Test the network
+     */
+    public double test(MLDataSet testingSet, boolean print) {
+        // Initialize testing counter
+        int testCount = 0;
+
+        // Initialize total error counter
+        double totalPercentageError = 0;
+        double totalMeanSquaredError = 0;
+        double totalRootMeanSquaredError = 0;
+
+        // For each data pair in testing set
+        for (MLDataPair dataPair : testingSet)
+        {
+            // Get input, expected output, actual output
+            double[] input = dataPair.getInputArray();
+            double[] outputExpected = dataPair.getIdealArray();
+            double[] outputActual = network.compute(dataPair.getInput()).getData();
+
+            // Denormalize the data
+            double[] denormalizedInput = UtilNormalizer.denormalize(input, vehicleDataSet.getInputColumnsNormalizedFields());
+            double[] denormalizedOutputExpected = UtilNormalizer.denormalize(outputExpected, vehicleDataSet.getOutputColumnsNormalizedFields());;
+            double[] denormalizedOutputActual = UtilNormalizer.denormalize(outputActual, vehicleDataSet.getOutputColumnsNormalizedFields());
+
+            // Compute the error
+            ErrorTuple errorTuple = new ErrorTuple(denormalizedOutputExpected, denormalizedOutputActual);
+
+            // Incrememnt total error
+            totalPercentageError += errorTuple.getErrorPercentage();
+            totalMeanSquaredError += errorTuple.getErrorMeanSquared();
+            totalRootMeanSquaredError += errorTuple.getErrorRootMeanSquared();
+
+            // Print results
+            if (print) {
+                System.out.println("Test #" + testCount + ":");
+                System.out.println("\t\tInput:                     " + UtilPrinter.getStr(denormalizedInput));
+                System.out.println("\t\tOutput Expected:           " + UtilPrinter.getStr(denormalizedOutputExpected));
+                System.out.println("\t\tOutput Actual:             " + UtilPrinter.getStr(denormalizedOutputActual));
+                System.out.println("\t\tPercentage Error:          " + UtilPrinter.getStr(errorTuple.getErrorPercentage() * 100) + "%");
+                System.out.println("\t\tMean Squared Error:        " + UtilPrinter.getStr(errorTuple.getErrorMeanSquared()));
+                System.out.println("\t\tRoot Mean Squared Error:   " + UtilPrinter.getStr(errorTuple.getErrorRootMeanSquared()));
+            }
+
+            // Increment counter
+            testCount++;
+        }
+
+        totalPercentageError = totalPercentageError / testCount;
+        totalMeanSquaredError = totalMeanSquaredError / testCount;
+        totalRootMeanSquaredError = totalRootMeanSquaredError / testCount;
+
+        if (print) {
+            System.out.println("Total Percentage Error:           " + UtilPrinter.getStr(totalPercentageError * 100) + "%");
+            System.out.println("Total Mean Squared Error:         " + UtilPrinter.getStr(totalMeanSquaredError));
+            System.out.println("Total Root Mean Squared Error:    " + UtilPrinter.getStr(totalRootMeanSquaredError));
+        }
+
+        return totalRootMeanSquaredError;
     }
 }
